@@ -1,0 +1,16 @@
+{
+  "amount": 1,
+  "credit_card":  {
+    "cardNumber": "4444333322221111",
+    "cvv": "123",
+    "expiration_month": "12",
+    "expiration_year": "2025"
+  },
+  "billing_address": {
+    "name": "Steve Smith",
+    "street_address": "8320 E. West St.",
+    "city": "Spokane",
+    "state": "WA",
+    "zip": "85284"
+  }
+}

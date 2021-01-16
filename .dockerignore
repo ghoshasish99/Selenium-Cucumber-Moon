@@ -1,0 +1,13 @@
+.DS_Store
+target
+target/*
+target/
+log/*
+log/
+.idea
+.idea/*
+.gitignore
+.gitattributes
+README.md
+Results/*
+*.yml
