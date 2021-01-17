@@ -2,7 +2,7 @@ package pages;
 
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import org.openqa.selenium.*;
-
+import cucumber.api.Scenario;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  * PageFactory For ShopPage
@@ -60,6 +61,7 @@ public class ShopLoginPage extends ShopMasterPageWeb {
     @FindBy(xpath = "//span[contains(text(),'Customer not found with email')]")
     WebElement lblCustomerNotFound;
 
+    
     static int iTime = (int) new Date().getTime();
 
     public ShopLoginPage(WebDriver driver) {
@@ -92,8 +94,18 @@ public class ShopLoginPage extends ShopMasterPageWeb {
     }
 
     //Set user Email in textbox
-    public void setRegisteredEmailID(String strRegisteredEmailID) {
-        strRegisteredEmailID = strRegisteredEmailID.replace("@", iTime + "@");
+    public void setRegisteredEmailID1(String strRegisteredEmailID) {
+        strRegisteredEmailID = strRegisteredEmailID.replace("@", iTime+1 + "@");
+        txtRegisteredEmail.sendKeys(strRegisteredEmailID);
+      //  ExtentCucumberAdapter.addTestStepLog("Note : UserName/Email Id entered as : " + strRegisteredEmailID);
+    }
+    public void setRegisteredEmailID2(String strRegisteredEmailID) {
+        strRegisteredEmailID = strRegisteredEmailID.replace("@", iTime+2 + "@");
+        txtRegisteredEmail.sendKeys(strRegisteredEmailID);
+      //  ExtentCucumberAdapter.addTestStepLog("Note : UserName/Email Id entered as : " + strRegisteredEmailID);
+    }
+    public void setRegisteredEmailID3(String strRegisteredEmailID) {
+        strRegisteredEmailID = strRegisteredEmailID.replace("@", iTime+3 + "@");
         txtRegisteredEmail.sendKeys(strRegisteredEmailID);
       //  ExtentCucumberAdapter.addTestStepLog("Note : UserName/Email Id entered as : " + strRegisteredEmailID);
     }
@@ -159,13 +171,37 @@ public class ShopLoginPage extends ShopMasterPageWeb {
      * @param strPassword
      * @return
      */
-    public void CreatAccount(String strFirstName, String strLastName, String strEmailID, String strPassword) {
+    public void CreatAccount1(String strFirstName, String strLastName, String strEmailID, String strPassword) {
         //Fill strFirstName
         this.setFirstName(strFirstName);
         //Fill strLastName
         this.setLastNam(strLastName);
         //Fill Email ID
-        this.setRegisteredEmailID(strEmailID);
+        this.setRegisteredEmailID1(strEmailID);
+        //Fill password
+        this.setPassword(strPassword);
+        //Fill Confirm password
+        this.setConfirmPassword(strPassword);
+    }
+    public void CreatAccount2(String strFirstName, String strLastName, String strEmailID, String strPassword) {
+        //Fill strFirstName
+        this.setFirstName(strFirstName);
+        //Fill strLastName
+        this.setLastNam(strLastName);
+        //Fill Email ID
+        this.setRegisteredEmailID2(strEmailID);
+        //Fill password
+        this.setPassword(strPassword);
+        //Fill Confirm password
+        this.setConfirmPassword(strPassword);
+    }
+    public void CreatAccount3(String strFirstName, String strLastName, String strEmailID, String strPassword) {
+        //Fill strFirstName
+        this.setFirstName(strFirstName);
+        //Fill strLastName
+        this.setLastNam(strLastName);
+        //Fill Email ID
+        this.setRegisteredEmailID3(strEmailID);
         //Fill password
         this.setPassword(strPassword);
         //Fill Confirm password
@@ -179,7 +215,7 @@ public class ShopLoginPage extends ShopMasterPageWeb {
         WebDriverWait waitLocal = new WebDriverWait(driver, 20);
         waitLocal.until(ExpectedConditions.visibilityOf(txtProductSearch));
         if (txtProductSearch.isDisplayed()) {
-           // ExtentCucumberAdapter.addTestStepLog("Account created successfully");
+            ExtentCucumberAdapter.addTestStepLog("Account created successfully");
         }
     }
 

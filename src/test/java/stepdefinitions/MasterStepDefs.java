@@ -34,22 +34,12 @@ public abstract class MasterStepDefs {
      * @param strDevice Device Name
      */
 
-    public void initializeDriver(String strDevice) {
+    public void initializeDriver() {
         String strAppHost;
-        driver = WebDriverFactory.createWebDriverInstance(strDevice);
+        driver = WebDriverFactory.createWebDriverInstance();
         wait = new WebDriverWait(driver, MasterStepDefs.TIMEOUT);
-        String strFrontendIP = System.getenv("backendPrivateIP");
-        if (strFrontendIP == null || strFrontendIP.isEmpty()) {
-            strAppHost = System.getProperty("applicationHost");
-            LOG.info("UI URL Fetched from POM Settings");
-        } else {
-            strAppHost = strFrontendIP;
-            LOG.info("UI URL Fetched from AWS ENVIRONMENT");
-        }
-
+        strAppHost = System.getProperty("applicationHost");
         String strAppHostURL = "http://" + strAppHost + ":3000";
-        String strAppUrl = "ApplicationUrl : " + strAppHostURL;
-        LOG.info(strAppUrl);
         driver.get(strAppHostURL.trim());
         driver.manage().timeouts().implicitlyWait(MasterStepDefs.TIMEOUT, TimeUnit.SECONDS);
         driver.manage().window().maximize();

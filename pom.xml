@@ -136,9 +136,9 @@
                     </includes>
                     <systemPropertyVariables>
                         <executionPlatform>${executionPlatformDefault}</executionPlatform>
-                        <hub>${GRIDURL}</hub>
+                        <hub>http://52.186.103.162:4444/wd/hub</hub>
                         <apiHost>${apiHostDefault}</apiHost>
-                        <applicationHost>${applicationHostDefault}</applicationHost>
+                        <applicationHost>awswrkshpalb-1570520390.us-west-2.elb.amazonaws.com</applicationHost>
                         <dashboardHost>${dashboardHostDefault}</dashboardHost>
                         <pat>${pat}</pat>
                         <organization>MAWorkshop</organization>

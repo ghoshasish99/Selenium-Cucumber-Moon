@@ -35,8 +35,7 @@ import runner.TestPlan;
         features = "src/test/resources/features/",
         tags = "@UITest and @Smoke",
         glue = {"stepdefinitions"},
-        //plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
-         plugin = {"junit:target/junitreport.xml","json:target/jsonreport.json"}
+        plugin = {"junit:target/junitreport.xml","json:target/jsonreport.json","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
         
 )
 public class TestsRunner {
@@ -46,9 +45,6 @@ public class TestsRunner {
     }
     
     protected static final Logger LOG = LoggerFactory.getLogger(TestsRunner.class);
-    protected static Map<String, String> UITest = new HashMap<String, String>();
-    protected static Map<String, String> APITest = new HashMap<String, String>();
-    protected static Map<String, String> UIRWDTest = new HashMap<String, String>();
     
     @BeforeClass
     public static void beforeClass() {
@@ -58,23 +54,6 @@ public class TestsRunner {
     @AfterClass
     public static void afterClass() throws IOException {
         LOG.info("================ Inside After Class ================");
-        for (Entry<String, String> set : CukeHooks.features.entrySet()) {
-             if(set.getKey().contains("UITest")) 
-            	 UITest.put(set.getKey().split(":")[1], set.getValue()+":"+CukeHooks.status.get(set.getValue()));
-             else if(set.getKey().contains("APITest"))
-            	 APITest.put(set.getKey().split(":")[1], set.getValue()+":"+CukeHooks.status.get(set.getValue()));
-             else
-            	 UIRWDTest.put(set.getKey().split(":")[1], set.getValue()+":"+CukeHooks.status.get(set.getValue()));
-		}
-        if(!UITest.isEmpty()) {
-        	TestPlan.updateTestResults("UITest", UITest);
-        }
-        if(!APITest.isEmpty()) {
-        	TestPlan.updateTestResults("APITest", APITest);
-        }
-        if(!UIRWDTest.isEmpty()) {
-        	TestPlan.updateTestResults("UIRWDTest", UIRWDTest);
-        }
     }
     
     

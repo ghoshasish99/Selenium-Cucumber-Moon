@@ -5,6 +5,8 @@ import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 
 import junit.framework.Assert;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +24,6 @@ public class ShopProductsPage extends ShopMasterPageWeb {
     /**
      * All WebElements are identified by @FindBy annotation
      */
-
 
 
     @FindBy(id = "productsearch")
@@ -61,7 +62,7 @@ public class ShopProductsPage extends ShopMasterPageWeb {
     }
 
     //Click on Search button
-    public void clickSerch() {
+    public void clickSearch() {
         btnSearchIcon.click();
     }
 

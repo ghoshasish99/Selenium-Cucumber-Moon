@@ -42,7 +42,7 @@ public class WebDriverFactory {
      * @return Instance of the {@link WebDriver} object
      */
 	protected static final Logger LOG = LoggerFactory.getLogger(WebDriverFactory.class);
-    public static WebDriver createWebDriverInstance(String strDevice) {
+    public static WebDriver createWebDriverInstance() {
         WebDriver driver = null;
 
         try {
@@ -54,10 +54,10 @@ public class WebDriverFactory {
             //LOCAL_CHROME, LOCAL_FIREFOX, AWS_CHROME, AWS_FIREFOX, AWS_DEVICEFARM_CHROME, AWS_DEVICEFARM_FIREFOX
             Map<String, String> mobileEmulation = new HashMap<>();
             //Nexus 7, Galaxy S5, iPad, Pixel 2
-            if (!strDevice.isEmpty() && !strDevice.equalsIgnoreCase("Web"))
-            {
-                mobileEmulation.put("deviceName", strDevice);
-            }
+			/*
+			 * if (!strDevice.isEmpty() && !strDevice.equalsIgnoreCase("Web")) {
+			 * mobileEmulation.put("deviceName", strDevice); }
+			 */
 
             switch (strExecutionPlatform) {
                 case "LOCAL_CHROME":
@@ -77,23 +77,15 @@ public class WebDriverFactory {
                     driver = new FirefoxDriver(firefoxOptions);
                     break;
                 case "GRID_CHROME":
-                    //chromeOptions = new ChromeOptions();
-                    
                     DesiredCapabilities capabilities = new DesiredCapabilities();
                     capabilities.setJavascriptEnabled(true);
                     capabilities.setBrowserName(BrowserType.CHROME);
                     capabilities.setPlatform(Platform.ANY);                   
                     try {
-                       // driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
                     	driver = new RemoteWebDriver(new URL(System.getProperty("hub")), capabilities);
-                       // System.out.println("Hub URL :"+ System.getProperty("hub"));
                     } catch (MalformedURLException e) {
                         LOG.error(e.getMessage());
                     }
-                        
-                    //System.setProperty("webdriver.chrome.driver", readData().getProperty("LOCAL_CHROME_DRIVER_PATH").trim());
-                    
-                    //driver = new ChromeDriver(chromeOptions);
                     driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
                     break;
                 default:

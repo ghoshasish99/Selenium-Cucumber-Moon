@@ -22,10 +22,10 @@ public class WebEShopStepDefs extends MasterStepDefs {
     ShopPaymentsPage objPaymentPage;
     ShopProductsPage shopProductsPage;
 
-    @Given("^User launched eshop login page in \"([^\"]*)\"$")
-    public void user_launched_eshop_login_page_in(String strDevice) {
+    @Given("^User launched eshop login page$")
+    public void user_launched_eshop_login_page() {
 
-        initializeDriver(strDevice);
+        initializeDriver();
         shopLoginPage = new ShopLoginPage(driver);
         shopAddressPage = new ShopAddressPage(driver);
         objPaymentPage = new ShopPaymentsPage(driver);
@@ -49,7 +49,7 @@ public class WebEShopStepDefs extends MasterStepDefs {
         shopLoginPage.clickLoginMenu();
         shopLoginPage.clickCreateAccount();
         Thread.sleep(5000);
-        shopLoginPage.CreatAccount(strFirstName, strLastName, strEmailID, strPassword);
+        shopLoginPage.CreatAccount1(strFirstName, strLastName, strEmailID, strPassword);
         shopLoginPage.clickCreateAccount();
        /* ExtentCucumberAdapter.addTestStepLog("Account Created");
         try {
@@ -65,20 +65,37 @@ public class WebEShopStepDefs extends MasterStepDefs {
         shopLoginPage.verifyAccountCreation();
     }
 
-    @When("^User logged in eshop using the valid emailid \"([^\"]*)\" and the valid password \"([^\"]*)\"$")
-    public void user_is_logged_in_using_the_valid_username_and_the_valid_password(String strEmailID, String strPassword) {
-        shopLoginPage.waitForLoad(driver);
-        shopLoginPage.clickMenu();
-      //  ExtentCucumberAdapter.addTestStepLog("Application launched successfully");
+    @When("^User logged in eshop using the valid emailid \"([^\"]*)\" and the valid password_2 \"([^\"]*)\"$")
+    public void user_is_logged_in_using_the_valid_username_and_the_valid_password1(String strEmailID, String strPassword) throws InterruptedException {
+    	shopLoginPage.waitForLoad(driver);
         shopLoginPage.clickMenu();
         shopLoginPage.clickLoginMenu();
-        shopLoginPage.loginToShop(strEmailID, strPassword);
-        shopLoginPage.clickLogin();
-      /*  try {
+        shopLoginPage.clickCreateAccount();
+        Thread.sleep(5000);
+        shopLoginPage.CreatAccount2("Ashish", "Ghosh",strEmailID, strPassword);
+        shopLoginPage.clickCreateAccount();
+        try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+        shopLoginPage.verifyAccountCreation();
+    }
+    @When("^User logged in eshop using the valid emailid \"([^\"]*)\" and the valid password_3 \"([^\"]*)\"$")
+    public void user_is_logged_in_using_the_valid_username_and_the_valid_password2(String strEmailID, String strPassword) throws InterruptedException {
+    	shopLoginPage.waitForLoad(driver);
+        shopLoginPage.clickMenu();
+        shopLoginPage.clickLoginMenu();
+        shopLoginPage.clickCreateAccount();
+        Thread.sleep(5000);
+        shopLoginPage.CreatAccount3("Ashish", "Ghosh",strEmailID, strPassword);
+        shopLoginPage.clickCreateAccount();
+        try {
+            ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        shopLoginPage.verifyAccountCreation();
     }
 
     @When("^User logged in eshop using the invalid emailid \"([^\"]*)\" and the invalid password \"([^\"]*)\"$")
@@ -90,11 +107,11 @@ public class WebEShopStepDefs extends MasterStepDefs {
         shopLoginPage.clickLoginMenu();
         shopLoginPage.loginToShop(strEmailID, strPassword);
         shopLoginPage.clickLogin();
-      /*  try {
+        try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @Then("user should see a shop home page$")
@@ -123,118 +140,90 @@ public class WebEShopStepDefs extends MasterStepDefs {
     @When("^User searches the \"([^\"]*)\"  in the Search box$")
     public void user_searches_the_in_the_Search_box(String strProduct) {
         shopProductsPage.setProduct(strProduct);
-        shopProductsPage.clickSerch();
-     /*   ExtentCucumberAdapter.addTestStepLog(strProduct + "item  searched");
+        shopProductsPage.clickSearch();
+        ExtentCucumberAdapter.addTestStepLog(strProduct + "item  searched");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
-    @Then("^User should be able to see the product \"([^\"]*)\" listed$")
-    public void user_should_be_able_to_see_the_products_based_upon_his_search(String strProduct) {
+    @Then("^User should be able to view and add the listed product \"([^\"]*)\"$")
+    public void user_should_be_able_to_view_and_add(String strProduct) {
         shopProductsPage.verifyProductDetailsPage(strProduct);
-     /*   ExtentCucumberAdapter.addTestStepLog("Product displayed");
+        shopProductsPage.clickAddToYourBasket();
+        shopProductsPage.clickBasket();
+        shopProductsPage.clickCheckOut();
+        ExtentCucumberAdapter.addTestStepLog(strProduct + " Checked Out");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @When("^User searches for the \"([^\"]*)\"$")
     public void user_searches_the(String strProduct) {
         shopProductsPage.setProduct(strProduct);
-        shopProductsPage.clickSerch();
-     /*   ExtentCucumberAdapter.addTestStepLog("Product searched");
+        shopProductsPage.clickSearch();
+        ExtentCucumberAdapter.addTestStepLog("Product searched");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
-
-    @Then("^User should be able to view the listed product \"([^\"]*)\"$")
-    public void user_should_be_able_to_view_the_listed_product(String strProduct) {
-        shopProductsPage.verifyProductListed(strProduct);
-      /*  ExtentCucumberAdapter.addTestStepLog("Product listed");
-        try {
-            ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    @Then("^User should be able to add the  \"([^\"]*)\" to the cart$")
-    public void user_should_be_able_to_add_the_to_the_cart(String strProduct) {
-        shopProductsPage.verifyProductListed(strProduct);
-        shopProductsPage.selectProduct(strProduct);
-        shopProductsPage.verifyProductDetailsPage(strProduct);
-        shopProductsPage.clickAddToYourBasket();
-        shopProductsPage.clickBasket();
-   /*     ExtentCucumberAdapter.addTestStepLog(strProduct + " Added into Cart");
-        try {
-            ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-
-    @When("^User adds the  \"([^\"]*)\" to the cart$")
+    
+    @When("^User adds \"([^\"]*)\" product to the cart$")
     public void user_adds_the_to_the_cart(String strProduct) {
         shopProductsPage.setProduct(strProduct);
-        shopProductsPage.clickSerch();
+        shopProductsPage.clickSearch();
         shopProductsPage.verifyProductListed(strProduct);
         shopProductsPage.selectProduct(strProduct);
         shopProductsPage.verifyProductDetailsPage(strProduct);
-        shopProductsPage.clickAddToYourBasket();
-        shopProductsPage.clickBasket();
-        shopProductsPage.clickCheckOut();
-      /*  ExtentCucumberAdapter.addTestStepLog(strProduct + " Checked Out");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 
-    @When("^User Address details with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
+    @When("^User enters Address details with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void user_Address_details_with(String strTitle, String strFirstName, String strLastName, String AddresslineOne, String AddresslineTwo, String strCity, String strState, String strZip) {
-        shopAddressPage.fillAddressDetails(strTitle, strFirstName, strLastName, AddresslineOne, AddresslineTwo, strCity, strState, strZip);
-     /*   ExtentCucumberAdapter.addTestStepLog("Address details entered");
+    	shopAddressPage.fillAddressDetails(strTitle, strFirstName, strLastName, AddresslineOne, AddresslineTwo, strCity, strState, strZip);
+        ExtentCucumberAdapter.addTestStepLog("Address details entered");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
         shopAddressPage.clickNext();
     }
 
 
-    @When("^User Payment details with \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+    @When("^User enters Payment details with \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
     public void user_Payment_details_with(String strCardNumber, String strNameOnCard, String strExpiryYear, String strExpiryMonth, String strSecurityCode) {
         objPaymentPage.fillPaymentDetails(strCardNumber, strNameOnCard, strExpiryYear, strExpiryMonth, strSecurityCode);
-     /*   ExtentCucumberAdapter.addTestStepLog("Payment details entered");
+        ExtentCucumberAdapter.addTestStepLog("Payment details entered");
         try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
         objPaymentPage.clickConfirm();
     }
 
     @Then("^User should get the Confirmation of Order$")
     public void user_should_get_the_Confirmation_of_Order() {
 
-     /*   try {
+        try {
             ExtentCucumberAdapter.addTestStepScreenCaptureFromPath(getScreenhot(driver));
         } catch (IOException e) {
             e.printStackTrace();
-        } */
+        } 
     }
 
     @After
