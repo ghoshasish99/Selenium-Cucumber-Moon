@@ -1,39 +1,27 @@
-# Docker
-# Build a Docker image 
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - master
 
-resources:
-- repo: self
+pool:
+  vmImage: 'ubuntu-latest'
 
-variables:
-  tag: '$(Build.BuildId)'
+steps:
 
-stages:
-- stage: Build
-  displayName: Build and Push image
-  jobs:  
-  - job: Build
-    displayName: Build and Push
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-       - task: Docker@2
-         inputs:
-           containerRegistry: 'acr'
-           repository: 'postbuildqa/maven-cucumber'
-           command: 'buildAndPush'
-           Dockerfile: '**/Dockerfile'
-           
-       - task: CopyFiles@2
-         inputs:
-           Contents: 'docker-compose.yml'
-           TargetFolder: '$(Build.ArtifactStagingDirectory)'
-           
-       - task: PublishBuildArtifacts@1
-         inputs:
-           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-           ArtifactName: 'drop'
-           publishLocation: 'Container'
+- script: |
+    mvn clean test -Dcucumber.options="--tags @UITest"
+  displayName: 'execute tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'target/junitreport.xml'
+    testRunTitle: 'Test Report'
+  displayName: 'Publish Reports'
+
+- task: PublishCucumberReport@1
+  inputs:
+    jsonDir: './target'
+    outputPath: './target'
+    theme: 'bootstrap'
+    reportSuiteAsScenarios: true
+    name: 'SeleniumwithCucumber'
+    title: 'Selenium with Cucumber'
