@@ -23,6 +23,6 @@ jobs:
       with:
         name: test-artifacts
         path: |
-            target/extent-reports/*html
-            target/*junit
-            target/*json 
+            target/extent-reports/*.html
+            target/*.xml
+            target/*.json 

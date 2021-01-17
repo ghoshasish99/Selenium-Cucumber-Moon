@@ -1,3 +1,4 @@
+![Java Cucumber Test Execution](https://github.com/ghoshasish99/Selenium-Cucumber-Moon/workflows/Java%20Cucumber%20Test%20Execution/badge.svg)
 
 ### Get Started
 ```xml
